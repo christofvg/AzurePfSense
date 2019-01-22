@@ -5,7 +5,7 @@
         "location": {
             "value": "West Europe"
         },
-        "vNetAddressName": {
+        "vNetName": {
             "value": "eu-vdc-vnet"
         },
         "vNetAddressPrefix": {
@@ -43,6 +43,18 @@
         },
         "managedDiskName": {
             "value": "eu-pfsense-1-os"
+        },
+        "frontEndNicName": {
+            "value": "eu-pfsense-1-frontend-nic"
+        },
+        "backEndNicName": {
+            "value": "eu-pfsense-1-backend-nic"
+        },
+        "vmName": {
+            "value": "eu-pfsense-1"
+        },
+        "vmSize": {
+            "value": "Standard_B2s"
         }
     }
 }

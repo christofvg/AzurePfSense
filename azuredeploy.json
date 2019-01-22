@@ -9,7 +9,7 @@
             },
             "defaultValue": "[resourceGroup().location]"
         },
-        "vNetAddressName": {
+        "vNetName": {
             "type": "string",
             "metadata": {
                 "description": "The name for the virtual network"
@@ -97,6 +97,30 @@
             "metadata": {
                 "description": "Name for the managed disk"
             }
+        },
+        "frontEndNicName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name for the front-end NIC"
+            }
+        },
+        "backEndNicName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name for the back-end NIC"
+            }
+        },
+        "vmName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name for the pfSense instance"
+            }
+        },
+        "vmSize": {
+            "type": "string",
+            "metadata": {
+                "description": "Size for the pfSense instance"
+            }
         }
     },
     "variables": {
@@ -121,7 +145,8 @@
             }
         ],
         "networkTemplateUri": "[uri(parameters('_artifactsLocation'), concat('virtualNetwork.json'))]",
-        "diskTemplateUri": "[uri(parameters('_artifactsLocation'), concat('managedDisk.json'))]"
+        "diskTemplateUri": "[uri(parameters('_artifactsLocation'), concat('managedDisk.json'))]",
+        "virtualMachineTemplateUri": "[uri(parameters('_artifactsLocation'), concat('pfSense.json'))]"
     },
     "resources": [
         {
@@ -139,7 +164,7 @@
                         "value": "[parameters('location')]"
                     },
                     "vNetName": {
-                        "value": "[parameters('vNetAddressName')]"
+                        "value": "[parameters('vNetName')]"
                     },
                     "vNetAddressPrefix": {
                         "value": "[parameters('vNetAddressPrefix')]"
@@ -175,6 +200,47 @@
                     },
                     "osType": {
                         "value": "[parameters('osType')]"
+                    },
+                    "managedDiskName": {
+                        "value": "[parameters('managedDiskName')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "provisionVirtualMachine",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-11-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('virtualMachineTemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "frontEndNicName": {
+                        "value": "[parameters('frontEndNicName')]"
+                    },
+                    "backEndNicName": {
+                        "value": "[parameters('backEndNicName')]"
+                    },
+                    "vNetName": {
+                        "value": "[parameters('vNetName')]"
+                    },
+                    "frontEndSubnetName": {
+                        "value": "[variables('virtualNetworkSubnets')[1].Name]"
+                    },
+                    "backEndSubnetName": {
+                        "value": "[variables('virtualNetworkSubnets')[2].Name]"
+                    },
+                    "vmName": {
+                        "value": "[parameters('vmName')]"
+                    },
+                    "vmSize": {
+                        "value": "[parameters('vmSize')]"
                     },
                     "managedDiskName": {
                         "value": "[parameters('managedDiskName')]"
