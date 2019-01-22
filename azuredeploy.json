@@ -87,7 +87,7 @@
                 }
             }
         ],
-        "networkTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nested/provisionNetwork.json'))]"
+        "networkTemplateUri": "[uri(parameters('_artifactsLocation'), concat('virtualNetwork.json'))]"
     },
     "resources": [
         {
