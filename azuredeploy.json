@@ -244,6 +244,9 @@
                     },
                     "managedDiskName": {
                         "value": "[parameters('managedDiskName')]"
+                    },
+                    "osType": {
+                        "value": "[parameters('osType')]"
                     }
                 }
             }

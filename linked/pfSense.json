@@ -29,6 +29,9 @@
         },
         "managedDiskName": {
             "type": "string"
+        },
+        "osType": {
+            "type": "string"
         }
     },
     "variables": {
@@ -94,7 +97,8 @@
                         "createOption": "Attach",
                         "managedDisk":{
                             "id": "[resourceId('Microsoft.Compute/disks/', parameters('managedDiskName'))]"
-                        }
+                        },
+                        "osType": "[parameters('osType')]"
                     }
                 },
                 "networkProfile": {
