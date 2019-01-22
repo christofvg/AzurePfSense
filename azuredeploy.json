@@ -1,0 +1,121 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "metadata": {
+                "description": "The Azure location to deploy all resources"
+            },
+            "defaultValue": "[resourceGroup().location]"
+        },
+        "vNetAddressName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name for the virtual network"
+            }
+        },
+        "vNetAddressPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "The address prefix for the virtual network"
+            }
+        },
+        "gatewaySubnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the gateway subnet (must be set to gatewaysubnet)"
+            },
+            "defaultValue": "gatewaysubnet"
+        },
+        "gatewaySubnetAddressPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "The address prefix of the gateway subnet (e.g.: 10.0.0.0/27)"
+            }
+        },
+        "frontEndSubnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the front-end subnet"
+            }
+        },
+        "frontEndSubnetAddressPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "The address prefix of the front-end subnet"
+            }
+        },
+        "backEndSubnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the back-end subnet"
+            }
+        },
+        "backEndSubnetAddressPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "The address prefix of the back-end subnet"
+            }
+        },
+        "_artifactsLocation": {
+            "type": "string",
+            "metadata": {
+                "description": "Path to the repository where the linked templates can be found"
+            },
+            "defaultValue": "https://raw.githubusercontent.com/christofvg/AzurePfSense/master/linked/"
+        }
+    },
+    "variables": {
+        "virtualNetworkSubnets": [
+            {
+                "name": "[parameters('gatewaySubnetName')]",
+                "properties": {
+                    "addressPrefix": "[parameters('gatewaySubnetAddressPrefix')]"
+                }
+            },
+            {
+                "name": "[parameters('frontEndSubnetName')]",
+                "properties": {
+                    "addressPrefix": "[parameters('frontEndSubnetAddressPrefix')]"
+                }
+            },
+            {
+                "name": "[parameters('backEndSubnetName')]",
+                "properties": {
+                    "addressPrefix": "[parameters('backEndSubnetAddressPrefix')]"
+                }
+            }
+        ],
+        "networkTemplateUri": "[uri(parameters('_artifactsLocation'), concat('nested/provisionNetwork.json'))]"
+    },
+    "resources": [
+        {
+            "name": "provisionVirtualNetwork",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-11-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('networkTemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "vNetName": {
+                        "value": "[parameters('vNetAddressName')]"
+                    },
+                    "vNetAddressPrefix": {
+                        "value": "[parameters('vNetAddressPrefix')]"
+                    },
+                    "vNetSubnets": {
+                        "value": "[variables('virtualNetworkSubnets')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}

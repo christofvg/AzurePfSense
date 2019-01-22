@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "West Europe"
+        },
+        "vNetAddressName": {
+            "value": "eu-vdc-vnet"
+        },
+        "vNetAddressPrefix": {
+            "value": "10.0.0.0/24"
+        },
+        "gatewaySubnetName": {
+            "value": "gatewaysubnet"
+        },
+        "gatewaySubnetAddressPrefix": {
+            "value": "10.0.0.0/27"
+        },
+        "frontEndSubnetName": {
+            "value": "frontend"
+        },
+        "frontEndSubnetAddressPrefix": {
+            "value": "10.0.0.32/27"
+        },
+        "backEndSubnetName": {
+            "value": "backend"
+        },
+        "backEndSubnetAddressPrefix": {
+            "value": "10.0.0.64/27"
+        },
+        "_artifactsLocation": {
+            "value": "https://raw.githubusercontent.com/christofvg/AzurePfSense/master/linked/"
+        }
+    }
+}
