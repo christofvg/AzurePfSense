@@ -1,0 +1,48 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]"
+        },
+        "storageType": {
+            "type": "string"
+        },
+        "sourceVhdPath": {
+            "type": "string"
+        },
+        "storageAccountName": {
+            "type": "string"
+        },
+        "osType": {
+            "type": "string"
+        },
+        "managedDiskName": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "sourceVhdUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net', parameters('sourceVhdPath'))]"
+    },
+    "resources": [
+        {
+            "name": "[parameters('managedDiskName')]",
+            "type": "Microsoft.Compute/disks",
+            "apiVersion": "2018-06-01",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "sku": {
+                "name": "[parameters('storageType')]"
+            },
+            "properties": {
+                "osType": "[parameters('osType')]",
+                "creationData": {
+                    "createOption": "Import",
+                    "sourceUri": "[variables('sourceVhdUri')]"
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}

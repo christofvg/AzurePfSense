@@ -31,6 +31,18 @@
         },
         "_artifactsLocation": {
             "value": "https://raw.githubusercontent.com/christofvg/AzurePfSense/master/linked/"
+        },
+        "managedDiskStorageType": {
+            "value": "Standard_LRS"
+        },
+        "sourceVhdPath": {
+            "value": "/vhd/pfsense.vhd"
+        },
+        "osType": {
+            "value": "Linux"
+        },
+        "managedDiskName": {
+            "value": "eu-pfsense-1-os"
         }
     }
 }

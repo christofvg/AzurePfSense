@@ -64,6 +64,39 @@
                 "description": "Path to the repository where the linked templates can be found"
             },
             "defaultValue": "https://raw.githubusercontent.com/christofvg/AzurePfSense/master/linked/"
+        },
+        "managedDiskStorageType": {
+            "type": "string",
+            "metadata": {
+                "description": "Storage type for the managed disk"
+            },
+            "defaultValue": "Standard_LRS"
+        },
+        "sourceVhdPath": {
+            "type": "string",
+            "metadata": {
+                "description": "Path to the vhd file on the storage account (e.g. /vhd/pfsense.vhd)"
+            }
+        },
+        "vhdStorageAccountName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the storage account where the vhd file is stored"
+            },
+            "defaultValue": "Standard_LRS"
+        },
+        "osType": {
+            "type": "string",
+            "metadata": {
+                "description": "OS Type of the image on the managed disk"
+            },
+            "defaultValue": "Linux"
+        },
+        "managedDiskName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name for the managed disk"
+            }
         }
     },
     "variables": {
@@ -87,7 +120,8 @@
                 }
             }
         ],
-        "networkTemplateUri": "[uri(parameters('_artifactsLocation'), concat('virtualNetwork.json'))]"
+        "networkTemplateUri": "[uri(parameters('_artifactsLocation'), concat('virtualNetwork.json'))]",
+        "diskTemplateUri": "[uri(parameters('_artifactsLocation'), concat('managedDisk.json'))]"
     },
     "resources": [
         {
@@ -112,6 +146,38 @@
                     },
                     "vNetSubnets": {
                         "value": "[variables('virtualNetworkSubnets')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "provisionManagedDisk",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-11-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('diskTemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "storageType": {
+                        "value": "[parameters('managedDiskStorageType')]"
+                    },
+                    "sourceVhdPath": {
+                        "value": "[parameters('sourceVhdPath')]"
+                    },
+                    "storageAccountName": {
+                        "value": "[parameters('vhdStorageAccountName')]"
+                    },
+                    "osType": {
+                        "value": "[parameters('osType')]"
+                    },
+                    "managedDiskName": {
+                        "value": "[parameters('managedDiskName')]"
                     }
                 }
             }
