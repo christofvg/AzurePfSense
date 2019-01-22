@@ -2,6 +2,18 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "virtualNetworkResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "The resource group where to deploy the virtual network"
+            }
+        },
+        "pfSenseResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "The resource group where to deploy pfSense"
+            }
+        },
         "location": {
             "type": "string",
             "metadata": {
@@ -150,9 +162,27 @@
     },
     "resources": [
         {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2018-11-01",
+            "location": "[parameters('location')]",
+            "name": "[parameters('virtualNetworkResourceGroup')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2018-11-01",
+            "location": "[parameters('location')]",
+            "name": "[parameters('pfSenseResourceGroup')]",
+            "properties": {}
+        },
+        {
             "name": "provisionVirtualNetwork",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups', parameters('virtualNetworkResourceGroup'))]"
+            ],
             "apiVersion": "2018-11-01",
+            "ResourceGroup": "[parameters('virtualNetworkResourceGroup')]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -178,7 +208,11 @@
         {
             "name": "provisionManagedDisk",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups', parameters('pfSenseResourceGroup'))]"
+            ],
             "apiVersion": "2018-11-01",
+            "ResourceGroup": "[parameters('pfSenseResourceGroup')]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -210,7 +244,11 @@
         {
             "name": "provisionVirtualMachine",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups', parameters('pfSenseResourceGroup'))]"
+            ],
             "apiVersion": "2018-11-01",
+            "ResourceGroup": "[parameters('pfSenseResourceGroup')]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -226,6 +264,9 @@
                     },
                     "backEndNicName": {
                         "value": "[parameters('backEndNicName')]"
+                    },
+                    "vNetResourceGroupName": {
+                        "value": "[parameters('pfSenseResourceGroup')]"
                     },
                     "vNetName": {
                         "value": "[parameters('vNetName')]"
