@@ -245,7 +245,8 @@
             "name": "provisionVirtualMachine",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/resourceGroups', parameters('pfSenseResourceGroup'))]"
+                "[resourceId('Microsoft.Resources/resourceGroups', parameters('pfSenseResourceGroup'))]",
+                "[resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Resources/deployments', 'provisionVirtualNetwork')]"
             ],
             "apiVersion": "2018-11-01",
             "ResourceGroup": "[parameters('pfSenseResourceGroup')]",
