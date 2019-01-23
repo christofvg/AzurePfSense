@@ -78,7 +78,7 @@
             "value": "eu-pfsense-mgmt-pip"
         },
         "managementVmSize": {
-            "value": "Standard_DS2_v3"
+            "value": "Standard_B2s"
         },
         "managementVmDiskType": {
             "value": "Premium_LRS"

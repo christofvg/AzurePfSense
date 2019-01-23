@@ -369,7 +369,7 @@
                 "provisionVirtualNetwork"
             ],
             "apiVersion": "2018-11-01",
-            "ResourceGroup": "[parameters('pfSenseResourceGroup')]",
+            "ResourceGroup": "[parameters('managementVmResourceGroup')]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
