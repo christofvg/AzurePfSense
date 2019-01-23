@@ -59,6 +59,12 @@
         "backEndNicName": {
             "value": "eu-pfsense-1-backend-nic"
         },
+        "frontEndIp": {
+            "value": "10.0.0.36"
+        },
+        "backEndIp": {
+            "value": "10.0.0.68"
+        },
         "vmName": {
             "value": "eu-pfsense-1"
         },

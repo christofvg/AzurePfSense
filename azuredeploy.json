@@ -128,6 +128,18 @@
                 "description": "Name for the back-end NIC"
             }
         },
+        "frontEndIp": {
+            "type": "string",
+            "metadata": {
+                "description": "IP for the front-end NIC"
+            }
+        },
+        "backEndIp": {
+            "type": "string",
+            "metadata": {
+                "description": "IP for the back-end NIC"
+            }
+        },
         "vmName": {
             "type": "string",
             "metadata": {
@@ -333,6 +345,12 @@
                     },
                     "backEndNicName": {
                         "value": "[parameters('backEndNicName')]"
+                    },
+                    "frontEndIp": {
+                        "value": "[parameters('frontEndIp')]"
+                    },
+                    "backEndIp": {
+                        "value": "[parameters('backEndIp')]"
                     },
                     "vNetResourceGroupName": {
                         "value": "[parameters('virtualNetworkResourceGroup')]"

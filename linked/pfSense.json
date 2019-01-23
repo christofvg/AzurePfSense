@@ -12,6 +12,12 @@
         "backEndNicName": {
             "type": "string"
         },
+        "frontEndIp": {
+            "type": "string"
+        },
+        "backEndIp": {
+            "type": "string"
+        },
         "vNetName": {
             "type": "string"
         },
@@ -53,7 +59,7 @@
                         "name": "ipconfig1",
                         "properties": {
                             "privateIPAllocationMethod": "Static",
-                            "privateIPAddress": "10.0.0.36",
+                            "privateIPAddress": "[parameters('frontEndIp')]",
                             "subnet": {
                                 "id": "[variables('frontEndSubnetRef')]"
                             }
@@ -73,7 +79,7 @@
                         "name": "ipconfig1",
                         "properties": {
                             "privateIPAllocationMethod": "Static",
-                            "privateIPAddress": "10.0.0.68",
+                            "privateIPAddress": "[parameters('backEndIp')]",
                             "subnet": {
                                 "id": "[variables('backEndSubnetRef')]"
                             }
