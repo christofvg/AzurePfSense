@@ -32,9 +32,9 @@ All parameters are passed to the 'main' ARM template azuredeploy.json. They are 
 
 ### virtualNetwork.json
 
-[string]location: The Azure location to deploy all resources
-[string]vNetName: The name for the virtual network
-[string]vNetAddressPrefix: The address prefix for the virtual network
+[string]location: The Azure location to deploy all resources  
+[string]vNetName: The name for the virtual network  
+[string]vNetAddressPrefix: The address prefix for the virtual network  
 
 >**[array]vNetSubnets**  
 >The subnets are passed to the virtualNetwork.json ARM template as parameters, but the array is built from the separate subnet parameters:
@@ -50,54 +50,54 @@ All parameters are passed to the 'main' ARM template azuredeploy.json. They are 
 
 ### managedDisk.json
 
-[string]location: The Azure location to deploy all resources
-[string]storageType(managedDiskStorageType): Storage type for the managed disk
-[string]sourceVhdPath: Path to the vhd file on the storage account
-[string]storageAccountName(vhdStorageAccountName): Name of the storage account where the vhd file is stored
-[string]osType: OS Type of the image on the managed disk
-[string]managedDiskName: Name for the managed disk
+[string]location: The Azure location to deploy all resources  
+[string]storageType(managedDiskStorageType): Storage type for the managed disk  
+[string]sourceVhdPath: Path to the vhd file on the storage account  
+[string]storageAccountName(vhdStorageAccountName): Name of the storage account where the vhd file is stored  
+[string]osType: OS Type of the image on the managed disk  
+[string]managedDiskName: Name for the managed disk  
 
 ### pfSense.json
 
-[string]location: The Azure location to deploy all resources
-[string]frontEndNicName: Name for the front-end NIC
-[string]backEndNicName: Name for the back-end NIC
-[string]frontEndIp: IP for the front-end NIC
-[string]backEndIp: IP for the back-end NIC
-[string]vNetName: Name for the pfSense instance
-[string]vNetResouceGroupName(virtualNetworkResourceGroup): The resource group where to deploy the virtual network
-[string]frontEndSubnetName: The name of the front-end subnet
-[string]backEndSubnetName: The name of the back-end subnet
-[string]vmName: Name for the pfSense instance
-[string]vmSize: Size for the pfSense instance
-[string]managedDiskName: Name for the managed disk
-[string]osType: OS Type of the image on the managed disk
+[string]location: The Azure location to deploy all resources  
+[string]frontEndNicName: Name for the front-end NIC  
+[string]backEndNicName: Name for the back-end NIC  
+[string]frontEndIp: IP for the front-end NIC  
+[string]backEndIp: IP for the back-end NIC  
+[string]vNetName: Name for the pfSense instance  
+[string]vNetResouceGroupName(virtualNetworkResourceGroup): The resource group where to deploy the virtual network  
+[string]frontEndSubnetName: The name of the front-end subnet  
+[string]backEndSubnetName: The name of the back-end subnet  
+[string]vmName: Name for the pfSense instance  
+[string]vmSize: Size for the pfSense instance  
+[string]managedDiskName: Name for the managed disk  
+[string]osType: OS Type of the image on the managed disk  
 
 ### managementVM.json
 
-[string]managementVmName: Name for the management virtual machine
-[string]publicIpAddressName(managementVmPublicIpAddressName): Name for the management virtual machine public ip address
-[string]managementVmNicName: Name for the management virtual machine nic
-[string]managementVmAdminUserName: Management virtual machine username
-[string]managementVmPassword: Management virtual machine password
-[string]managementVmDiskType: Management virtual machine virtual disk type
-[string]managementVmOSDiskName: Management virtual machine OS disk name
-[string]managementVmSize: Management virtual machine size
-[string]managementVmOSVersion: Management virtual machine OS version
-[string]location: The Azure location to deploy all resources
-[string]vNetResourceGroupName(virtualNetworkResourceGroup): The resource group where to deploy the virtual network
-[string]vNetName: The name for the virtual network
-[string]backEndSubnetName: The name of the back-end subnet
+[string]managementVmName: Name for the management virtual machine  
+[string]publicIpAddressName(managementVmPublicIpAddressName): Name for the management virtual machine public ip address  
+[string]managementVmNicName: Name for the management virtual machine nic  
+[string]managementVmAdminUserName: Management virtual machine username  
+[string]managementVmPassword: Management virtual machine password  
+[string]managementVmDiskType: Management virtual machine virtual disk type  
+[string]managementVmOSDiskName: Management virtual machine OS disk name  
+[string]managementVmSize: Management virtual machine size  
+[string]managementVmOSVersion: Management virtual machine OS version  
+[string]location: The Azure location to deploy all resources  
+[string]vNetResourceGroupName(virtualNetworkResourceGroup): The resource group where to deploy the virtual network  
+[string]vNetName: The name for the virtual network  
+[string]backEndSubnetName: The name of the back-end subnet  
 
 ### Resource Groups
 
 Resource groups are also deployed by the ARM template. Therefore, parameters with the names for the resource groups are also needed.
 
-[string]virtualNetworkResourceGroup: The resource group where to deploy the virtual network
-[string]pfSenseResourceGroup: The resource group where to deploy pfSense
-[string]managementVmResourceGroup: The resource group where to deploy the management virtual machine
+[string]virtualNetworkResourceGroup: The resource group where to deploy the virtual network  
+[string]pfSenseResourceGroup: The resource group where to deploy pfSense  
+[string]managementVmResourceGroup: The resource group where to deploy the management virtual machine  
 
->**Security**
+>**Security**  
 >The parameters *vhdStorageAccountName* and *managementVmAdminPassword* are not mentioned in the parameters file to prevent sensitive data in source control. They can be passed to the deployment as extra parameter.
 
 ## Deployment
