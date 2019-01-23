@@ -14,6 +14,12 @@
                 "description": "The resource group where to deploy pfSense"
             }
         },
+        "managementVmResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "The resource group where to deploy the management virtual machine"
+            }
+        },
         "location": {
             "type": "string",
             "metadata": {
@@ -133,6 +139,60 @@
             "metadata": {
                 "description": "Size for the pfSense instance"
             }
+        },
+        "managementVmName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name for the management virtual machine"
+            }
+        },
+        "managementVmPublicIpAddressName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name for the management virtual machine public ip address"
+            }
+        },
+        "managementVmNicName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name for the management virtual machine nic"
+            }
+        },
+        "managementVmAdminUserName": {
+            "type": "string",
+            "metadata": {
+                "description": "Management virtual machine username"
+            }
+        },
+        "managementVmAdminPassword": {
+            "type": "string",
+            "metadata": {
+                "description": "Management virtual machine password"
+            }
+        },
+        "managementVmDiskType": {
+            "type": "string",
+            "metadata": {
+                "description": "Management virtual machine virtual disk type"
+            }
+        },
+        "managementVmOSDiskName": {
+            "type": "string",
+            "metadata": {
+                "description": "Management virtual machine OS disk name"
+            }
+        },
+        "managementVmSize": {
+            "type": "string",
+            "metadata": {
+                "description": "Management virtual machine size"
+            }
+        },
+        "managementVmOSVersion": {
+            "type": "string",
+            "metadata": {
+                "description": "Management virtual machine OS version"
+            }
         }
     },
     "variables": {
@@ -158,7 +218,8 @@
         ],
         "networkTemplateUri": "[uri(parameters('_artifactsLocation'), concat('virtualNetwork.json'))]",
         "diskTemplateUri": "[uri(parameters('_artifactsLocation'), concat('managedDisk.json'))]",
-        "virtualMachineTemplateUri": "[uri(parameters('_artifactsLocation'), concat('pfSense.json'))]"
+        "virtualMachineTemplateUri": "[uri(parameters('_artifactsLocation'), concat('pfSense.json'))]",
+        "managementVmTemplateUri": "[uri(parameters('_artifactsLocation'), concat('managementVM.json'))]"
     },
     "resources": [
         {
@@ -173,6 +234,13 @@
             "apiVersion": "2018-11-01",
             "location": "[parameters('location')]",
             "name": "[parameters('pfSenseResourceGroup')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2018-11-01",
+            "location": "[parameters('location')]",
+            "name": "[parameters('managementVmResourceGroup')]",
             "properties": {}
         },
         {
@@ -246,7 +314,7 @@
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/resourceGroups', parameters('pfSenseResourceGroup'))]",
-                "[resourceId(parameters('virtualNetworkResourceGroup'), 'Microsoft.Resources/deployments', 'provisionVirtualNetwork')]"
+                "provisionVirtualNetwork"
             ],
             "apiVersion": "2018-11-01",
             "ResourceGroup": "[parameters('pfSenseResourceGroup')]",
@@ -267,7 +335,7 @@
                         "value": "[parameters('backEndNicName')]"
                     },
                     "vNetResourceGroupName": {
-                        "value": "[parameters('pfSenseResourceGroup')]"
+                        "value": "[parameters('virtualNetworkResourceGroup')]"
                     },
                     "vNetName": {
                         "value": "[parameters('vNetName')]"
@@ -289,6 +357,64 @@
                     },
                     "osType": {
                         "value": "[parameters('osType')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "provisionManagementVM",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups', parameters('managementVmResourceGroup'))]",
+                "provisionVirtualNetwork"
+            ],
+            "apiVersion": "2018-11-01",
+            "ResourceGroup": "[parameters('pfSenseResourceGroup')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('managementVmTemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "managementVmName": {
+                        "value": "[parameters('managementVmName')]"
+                    },
+                    "publicIpAddressName": {
+                        "value": "[parameters('managementVmPublicIpAddressName')]"
+                    },
+                    "managementVmNicName": {
+                        "value": "[parameters('managementVmNicName')]"
+                    },
+                    "managementVmAdminUserName": {
+                        "value": "[parameters('managementVmAdminUserName')]"
+                    },
+                    "managementVmAdminPassword": {
+                        "value": "[parameters('managementVmAdminPassword')]"
+                    },
+                    "managementVmDiskType": {
+                        "value": "[parameters('managementVmDiskType')]"
+                    },
+                    "managementVmOSDiskName": {
+                        "value": "[parameters('managementVmOSDiskName')]"
+                    },
+                    "managementVmSize": {
+                        "value": "[parameters('managementVmSize')]"
+                    },
+                    "managementVmOSVersion": {
+                        "value": "[parameters('managementVmOSVersion')]"
+                    },
+                    "vNetResourceGroupName": {
+                        "value": "[parameters('virtualNetworkResourceGroup')]"
+                    },
+                    "vNetName": {
+                        "value": "[parameters('vNetName')]"
+                    },
+                    "backEndSubnetName": {
+                        "value": "[parameters('backEndSubnetName')]"
                     }
                 }
             }

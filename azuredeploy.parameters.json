@@ -8,6 +8,9 @@
         "pfSenseResourceGroup": {
             "value": "eu-firewalls-rg"
         },
+        "managementVmResourceGroup": {
+            "value": "eu-firewall-management-rg"
+        },
         "location": {
             "value": "West Europe"
         },
@@ -61,6 +64,33 @@
         },
         "vmSize": {
             "value": "Standard_B2s"
+        },
+        "managementVmName": {
+            "value": "eu-pfsense-mgmt"
+        },
+        "managementVmNicName": {
+            "value": "eu-pfsense-mgmt-nic"
+        },
+        "managementVmOSDiskName": {
+            "value": "eu-pfsense-mgmt-os"
+        },
+        "managementVmPublicIpAddressName": {
+            "value": "eu-pfsense-mgmt-pip"
+        },
+        "managementVmSize": {
+            "value": "Standard_DS2_v3"
+        },
+        "managementVmDiskType": {
+            "value": "Premium_LRS"
+        },
+        "managementVmDiskType": {
+            "value": "Premium_LRS"
+        },
+        "managementVmAdminUserName": {
+            "value": "pfsense"
+        },
+        "managementVmOSVersion": {
+            "value": "2016-Datacenter"
         }
     }
 }
