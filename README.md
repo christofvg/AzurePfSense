@@ -17,6 +17,7 @@ This repository is used to support the *pfSense on Azure* blog post series on [h
 * [pfSense on Azure - Part 1 - Create pfSense Virtual Machine](https://www.christofvg.be/2019/01/12/pfSense-on-Azure-Part-1-Create-pfSense-Virtual-Machine/)
 * [pfSense on Azure - Part 2 - Install pfSense](https://www.christofvg.be/2019/01/12/pfSense-on-Azure-Part-2-Install-pfSense/)
 * [pfSense on Azure - Part 3 - Deploy pfSense in Azure](https://www.christofvg.be/2019/01/12/pfSense-on-Azure-Part-3-Deploy-pfSense-in-Azure/)
+* [pfSense on Azure - Part 4 - Deploy pfSense in Azure with ARM templates](https://www.christofvg.be/2019/01/23/pfSense-on-Azure-Part-4-Deploy-pfSense-in-Azure-with-ARM-templates/)
 
 ## Design
 
